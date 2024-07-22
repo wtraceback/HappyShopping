@@ -1,6 +1,6 @@
 function App() {
   return (
-    <div>
+    <div style={{fontSize: '.2rem'}}>
       hello world
     </div>
   );

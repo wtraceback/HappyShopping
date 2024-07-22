@@ -1,0 +1,12 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/*
+    1rem = html font-size 的大小
+    如下所示 1rem === 100px
+*/
+/* html {
+    font-size: 100px;
+} */
