@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import "normalize.css"
 
-import './styles/base.css'
+// import './styles/base.css'
 // border: 1px; 一像素边框在不同的移动端中展示效果不一样，因此需要引入 border.css，
 // 使用 border 的时候，直接使用 border.css 中定义好的即可
 import './styles/border.css'
