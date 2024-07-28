@@ -10,3 +10,30 @@
 /* html {
     font-size: 100px;
 } */
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+@font-face {
+  font-family: "iconfont"; /* Project id 4633505 */
+  src: url('//at.alicdn.com/t/c/font_4633505_n0qpeovqt6j.woff2?t=1721920824840') format('woff2'),
+        url('//at.alicdn.com/t/c/font_4633505_n0qpeovqt6j.woff?t=1721920824840') format('woff'),
+        url('//at.alicdn.com/t/c/font_4633505_n0qpeovqt6j.ttf?t=1721920824840') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFF;
+}
