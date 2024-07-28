@@ -14,7 +14,7 @@ import App from './App';
 document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
 
 window.addEventListener('resize', () => {
-    document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
+  document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
 })
 
 
