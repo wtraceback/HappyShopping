@@ -1,13 +1,19 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import "./style.css"
+import { useNavigate } from 'react-router-dom';
 
 function Guide() {
+  // 处理动画相关的逻辑
   const ref = useRef<HTMLDivElement>(null!)
-
   useEffect(() => {
-    console.log("useEffect");
     ref.current.style.opacity = '1'
   }, [])
+
+  // 处理页面跳转相关的逻辑
+  const navigate = useNavigate()
+  const handleIconClick = useCallback(() => {
+    navigate('/login')
+  }, [navigate])
 
   return (
     <div ref={ref} className="page guide-page">
@@ -22,7 +28,10 @@ function Guide() {
         className="sub-pic"
         src={require("../../images/slogn_word_icon_@2x.png")}
       />
-      <div className="iconfont arrow-icon">&#xe60c;</div>
+      <div
+        className="iconfont arrow-icon"
+        onClick={handleIconClick}
+      >&#xe60c;</div>
     </div>
   );
 }
