@@ -1,0 +1,59 @@
+.register-page .tab {
+    width: 1.14rem;
+    padding: .5rem 0 .77rem 0;
+    margin: 0 auto;
+    line-height: .21rem;
+    font-size: .18rem;
+    color: #242424;
+}
+
+.register-page .tab-item {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.register-page .tab-item-left {
+}
+
+.register-page .tab-item-right {
+    float: right;
+    color: #73D13D;
+}
+
+.register-page .form {
+    margin-bottom: .6rem;
+}
+
+.register-page .form-item {
+    display: flex;
+    padding: .16rem .3rem;
+    line-height: .24rem;
+    font-size: .16rem;
+}
+
+.register-page .form-item-title {
+    width: 0.65rem;
+    margin-right: .42rem;
+}
+
+.register-page .form-item-content {
+    flex: 1;
+    border: none;
+    outline: none;
+    color: #242424;
+}
+
+.register-page .form-item-content::placeholder {
+    color: #D9D9D9;
+}
+
+.register-page .submit {
+    margin: 0 .3rem .94rem .3rem;
+    line-height: .5rem;
+    border-radius: .25rem;
+    background-color: #73D13D;
+    box-shadow: 0 0.06rem 0.06rem 0 #D9F7BE;
+    font-size: .16rem;
+    color: #FFF;
+    text-align: center;
+}

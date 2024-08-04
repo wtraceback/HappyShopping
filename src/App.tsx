@@ -7,6 +7,7 @@ import "./styles/base.css"
 import { HashRouter, Routes, Route } from "react-router-dom"
 import Guide from './containers/Guide'
 import Login from './containers/Login'
+import Register from './containers/Register'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Guide />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
         </Routes>
     </HashRouter>
   );
