@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import './style.css'
+import './style.scss'
 
 function Login() {
     // 处理页面跳转相关的逻辑
