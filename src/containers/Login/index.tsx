@@ -1,9 +1,38 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 import './style.scss'
 
 function Login() {
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [password, setPassword] = useState('')
+
+    const [data, setData] = useState(null)
+    const [error, setError] = useState('')
+    const [loaded, setLoaded] = useState(false)
+
+    function handleSubmitBtnClick() {
+        axios.get('/a.json')
+            .then((response) => {
+                setLoaded(true)
+                setData(response.data)
+            })
+            .catch((error) => {
+                setLoaded(true)
+                setError(error.message)
+            })
+    }
+
+    if (loaded) {
+        setLoaded(false)
+        if (data) {
+            alert('请求成功')
+        } else {
+            alert(error)
+        }
+    }
+
     // 处理页面跳转相关的逻辑
     const navigate = useNavigate()
     const handleRegisterClick = useCallback(() => {
@@ -22,14 +51,28 @@ function Login() {
             <div className="form">
                 <div className="form-item">
                     <div className="form-item-title">手机号</div>
-                    <input className="form-item-content" placeholder="请输入手机号" />
+                    <input
+                        value={phoneNumber}
+                        className="form-item-content"
+                        placeholder="请输入手机号"
+                        onChange={(e) => { setPhoneNumber(e.target.value) }}
+                    />
                 </div>
                 <div className="form-item">
                     <div className="form-item-title">密码</div>
-                    <input type="password" className="form-item-content" placeholder="请输入密码" />
+                    <input
+                        value={password}
+                        type="password"
+                        className="form-item-content"
+                        placeholder="请输入密码"
+                        onChange={(e) => { setPassword(e.target.value) }}
+                    />
                 </div>
             </div>
-            <div className="submit">
+            <div
+                className="submit"
+                onClick={handleSubmitBtnClick}
+            >
                 登录
             </div>
             <p className="notice">
