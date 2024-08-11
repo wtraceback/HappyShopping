@@ -1,37 +1,31 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import useRequest from '../../utils/useRequest'
 
 import './style.scss'
+
+// 定义接口返回内容
+type ResponseType = {
+    name: string;
+}
 
 function Login() {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
 
-    const [data, setData] = useState(null)
-    const [error, setError] = useState('')
-    const [loaded, setLoaded] = useState(false)
+    // 通过泛型传递给 useRequest 方法
+    // 接收 data 类型也一定为 ResponseType | null
+    const { data, error, request, cancel } = useRequest<ResponseType>('/a.json', 'GET', {})
 
     function handleSubmitBtnClick() {
-        axios.get('/a.json')
-            .then((response) => {
-                setLoaded(true)
-                setData(response.data)
-            })
-            .catch((error) => {
-                setLoaded(true)
-                setError(error.message)
-            })
+        request()
+        // cancel()
     }
 
-    if (loaded) {
-        setLoaded(false)
-        if (data) {
-            alert('请求成功')
-        } else {
-            alert(error)
-        }
-    }
+    useEffect(() => {
+        if (data) { console.log(data) }
+        if (error) { alert(error) }
+    }, [data, error])
 
     // 处理页面跳转相关的逻辑
     const navigate = useNavigate()
