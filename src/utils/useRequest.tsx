@@ -17,26 +17,27 @@ function useRequest<T>(
         controllerRef.current.abort()
     }
 
-    const request = async () => {
+    const request = () => {
         // 清空之前的请求状态和数据
         setData(null)
         setError('')
         setLoaded(false)
 
         // 发送请求
-        try {
-            const response = await axios.request<T>({
-                url,
-                method,
-                signal: controllerRef.current.signal,
-                data: payload
-            })
+        return axios.request<T>({
+            url,
+            method,
+            signal: controllerRef.current.signal,
+            data: payload
+        }).then(response => {
             setData(response.data)
-        } catch(e: any) {
+            return response.data
+        }).catch((e: any) => {
             setError(e.message || 'unknow request error.')
-        } finally {
+            throw new Error(e)
+        }).finally(() => {
             setLoaded(true)
-        }
+        })
     }
 
     // 把 data 返回，返回 data 的类型一定为 ResponseType | null

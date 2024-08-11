@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import useRequest from '../../utils/useRequest'
 
@@ -15,17 +15,15 @@ function Login() {
 
     // 通过泛型传递给 useRequest 方法
     // 接收 data 类型也一定为 ResponseType | null
-    const { data, error, request, cancel } = useRequest<ResponseType>('/a.json', 'GET', {})
+    const { request } = useRequest<ResponseType>('/a.json', 'GET', {})
 
     function handleSubmitBtnClick() {
-        request()
-        // cancel()
+        request().then((data) => {
+            data && console.log(data.name)
+        }).catch((e: any) => {
+            alert(e?.message)
+        })
     }
-
-    useEffect(() => {
-        if (data) { console.log(data) }
-        if (error) { alert(error) }
-    }, [data, error])
 
     // 处理页面跳转相关的逻辑
     const navigate = useNavigate()
