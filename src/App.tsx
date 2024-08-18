@@ -4,21 +4,35 @@ import "normalize.css"
 import './styles/border.css'
 import "./styles/base.css"
 
-import { HashRouter, Routes, Route } from "react-router-dom"
+import { createHashRouter, RouterProvider } from "react-router-dom"
 import Guide from './containers/Guide'
-import Login from './containers/Login'
-import Register from './containers/Register'
+import Account from './containers/Account'
+import Login from './containers/Account/Login'
+import Register from './containers/Account/Register'
+
+const router = createHashRouter([
+    {
+        path: '/',
+        element: <Guide />,
+    },
+    {
+        path: '/account',
+        element: <Account />,
+        children: [
+            {
+                path: 'login',
+                element: <Login />,
+            },
+            {
+                path: 'register',
+                element: <Register />,
+            },
+        ]
+    },
+])
 
 function App() {
-  return (
-    <HashRouter>
-        <Routes>
-            <Route path="/" element={<Guide />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-        </Routes>
-    </HashRouter>
-  );
+    return <RouterProvider router={router} />
 }
 
 export default App;

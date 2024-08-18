@@ -1,5 +1,4 @@
-import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useRef } from 'react'
 
 import './style.scss'
 import useRequest from '../../utils/useRequest'
@@ -7,25 +6,22 @@ import Modal, { ModalInterfaceType} from '../../components/Modal'
 
 // 定义接口返回内容
 type ResponseType = {
-    success: boolean,
-    data: boolean,
+    success: boolean;
+    data: {
+        token: string;
+    }
 }
 
-function Register() {
-    const [userName, setUserName] = useState('')
+function Login() {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
-    const [checkPassword, setCheckPassword] = useState('')
     const modalRef = useRef<ModalInterfaceType>(null!)
 
+    // 通过泛型传递给 useRequest 方法
+    // 接收 data 类型也一定为 ResponseType | null
     const { request } = useRequest<ResponseType>()
 
     function handleSubmitBtnClick() {
-        if (!userName) {
-            modalRef.current.showMessage('用户名不得为空！')
-            return
-        }
-
         if (!phoneNumber) {
             modalRef.current.showMessage('手机号码不得为空！')
             return
@@ -36,26 +32,12 @@ function Register() {
             return
         }
 
-        if (password.length < 6) {
-            modalRef.current.showMessage('密码至少为 6 位！')
-            return
-        }
-
-        if (password !== checkPassword) {
-            modalRef.current.showMessage('两次输入密码不一致！')
-            return
-        }
-
         request({
-            url: '/api/register.json',
+            url: '/api/login.json',
             // method: 'GET',
             // params: { phone: phoneNumber, password: password },
             method: 'POST',
-            data: {
-                user: userName,
-                phone: phoneNumber,
-                password: password
-            },
+            data: { phone: phoneNumber, password: password },
         }).then((data) => {
             data && console.log(data)
         }).catch((e: any) => {
@@ -63,25 +45,9 @@ function Register() {
         })
     }
 
-
     return (
-        <div className="page register-page">
-            <div className="tab">
-                <div className="tab-item tab-item-left">
-                    <Link to="/login">登录</Link>
-                </div>
-                <div className="tab-item tab-item-right">注册</div>
-            </div>
+        <>
             <div className="form">
-                <div className="form-item">
-                    <div className="form-item-title">用户名</div>
-                    <input
-                        value={userName}
-                        className="form-item-content"
-                        placeholder="请输入用户名"
-                        onChange={(e) => { setUserName(e.target.value) }}
-                    />
-                </div>
                 <div className="form-item">
                     <div className="form-item-title">手机号</div>
                     <input
@@ -101,27 +67,20 @@ function Register() {
                         onChange={(e) => { setPassword(e.target.value) }}
                     />
                 </div>
-                <div className="form-item">
-                    <div className="form-item-title">确认密码</div>
-                    <input
-                        value={checkPassword}
-                        type="password"
-                        className="form-item-content"
-                        placeholder="请输入确认密码"
-                        onChange={(e) => { setCheckPassword(e.target.value) }}
-                    />
-                </div>
             </div>
             <div
                 className="submit"
                 onClick={handleSubmitBtnClick}
             >
-                注册
+                登录
             </div>
+            <p className="notice">
+                *登录即表示您赞同使用条款及隐私政策
+            </p>
 
             <Modal ref={modalRef} />
-        </div>
+        </>
     )
 }
 
-export default Register
+export default Login
