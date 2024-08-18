@@ -1,12 +1,10 @@
 import { useState, useRef } from 'react'
-import axios, { AxiosRequestConfig, Method } from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
 // T 为传递进来的 ResponseType
-function useRequest<T>(
-    url: string,
-    method: Method,
-    payload: AxiosRequestConfig
-) {
+function useRequest<T>(options: AxiosRequestConfig = {
+    url: '/', method: 'GET', data: {}, params: {},
+}) {
     // data 的类型定义为 ResponseType | null
     const [data, setData] = useState<T | null>(null)
     const [error, setError] = useState('')
@@ -17,7 +15,7 @@ function useRequest<T>(
         controllerRef.current.abort()
     }
 
-    const request = () => {
+    const request = (requestOptions?: AxiosRequestConfig) => {
         // 清空之前的请求状态和数据
         setData(null)
         setError('')
@@ -25,10 +23,11 @@ function useRequest<T>(
 
         // 发送请求
         return axios.request<T>({
-            url,
-            method,
+            url: requestOptions?.url || options.url,
+            method: requestOptions?.method || options.method,
             signal: controllerRef.current.signal,
-            data: payload
+            data: requestOptions?.data || options.data,
+            params: requestOptions?.params || options.params,
         }).then(response => {
             setData(response.data)
             return response.data

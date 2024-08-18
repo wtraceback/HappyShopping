@@ -17,7 +17,7 @@ function Login() {
 
     // 通过泛型传递给 useRequest 方法
     // 接收 data 类型也一定为 ResponseType | null
-    const { request } = useRequest<ResponseType>('/a.json', 'GET', {})
+    const { request } = useRequest<ResponseType>()
 
     function handleSubmitBtnClick() {
         if (!phoneNumber) {
@@ -30,7 +30,13 @@ function Login() {
             return
         }
 
-        request().then((data) => {
+        request({
+            url: '/login.json',
+            // method: 'GET',
+            // params: { phone: phoneNumber, password: password },
+            method: 'POST',
+            data: { phone: phoneNumber, password: password },
+        }).then((data) => {
             data && console.log(data.name)
         }).catch((e: any) => {
             modalRef.current?.showMessage(e?.message || '未知异常')
