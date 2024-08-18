@@ -1,13 +1,16 @@
-import { useCallback, useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom';
-import useRequest from '../../utils/useRequest'
+import { useState, useRef } from 'react'
+import { Link } from 'react-router-dom';
 
 import './style.scss'
+import useRequest from '../../utils/useRequest'
 import Modal, { ModalInterfaceType} from '../../components/Modal'
 
 // 定义接口返回内容
 type ResponseType = {
-    name: string;
+    success: boolean;
+    data: {
+        token: string;
+    }
 }
 
 function Login() {
@@ -31,32 +34,25 @@ function Login() {
         }
 
         request({
-            url: '/login.json',
+            url: '/api/login.json',
             // method: 'GET',
             // params: { phone: phoneNumber, password: password },
             method: 'POST',
             data: { phone: phoneNumber, password: password },
         }).then((data) => {
-            data && console.log(data.name)
+            data && console.log(data)
         }).catch((e: any) => {
             modalRef.current?.showMessage(e?.message || '未知异常')
         })
     }
 
-    // 处理页面跳转相关的逻辑
-    const navigate = useNavigate()
-    const handleRegisterClick = useCallback(() => {
-        navigate('/register')
-    }, [navigate])
-
     return (
         <div className="page login-page">
             <div className="tab">
                 <div className="tab-item tab-item-left">登录</div>
-                <div
-                    className="tab-item tab-item-right"
-                    onClick={handleRegisterClick}
-                >注册</div>
+                <div className="tab-item tab-item-right">
+                    <Link to="/register">注册</Link>
+                </div>
             </div>
             <div className="form">
                 <div className="form-item">
