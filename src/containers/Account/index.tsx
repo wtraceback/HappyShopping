@@ -1,4 +1,6 @@
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
+
 import './style.scss'
 
 function Account() {
@@ -6,6 +8,14 @@ function Account() {
     const isLoginActivated = location.pathname === '/account/login'
     const loginActiveClass = isLoginActivated ? 'tab-item-active' : ''
     const registerActiveClass = !isLoginActivated ? 'tab-item-active' : ''
+    const navigate = useNavigate()
+
+    // 如果已经登录，自动跳转到商城首页
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/home')
+        }
+    }, [navigate])
 
     return (
         <div className="page account-page">

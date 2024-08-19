@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 import "./style.scss"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 function Guide() {
   // 处理动画相关的逻辑
@@ -12,7 +12,11 @@ function Guide() {
   // 处理页面跳转相关的逻辑
   const navigate = useNavigate()
   const handleIconClick = useCallback(() => {
-    navigate('/account/login')
+    if (localStorage.getItem('token')) {
+        navigate('/home')
+    } else {
+        navigate('/account/login')
+    }
   }, [navigate])
 
   return (

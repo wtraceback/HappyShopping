@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import axios, { AxiosRequestConfig } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 // T 为传递进来的 ResponseType
 function useRequest<T>(options: AxiosRequestConfig = {
@@ -10,6 +11,7 @@ function useRequest<T>(options: AxiosRequestConfig = {
     const [error, setError] = useState('')
     const [loaded, setLoaded] = useState(false)
     const controllerRef = useRef(new AbortController())
+    const navigate = useNavigate()
 
     const cancel = () => {
         controllerRef.current.abort()
@@ -21,6 +23,12 @@ function useRequest<T>(options: AxiosRequestConfig = {
         setError('')
         setLoaded(false)
 
+        // 发请求时，携带登录 token 给后端
+        const loginToken = localStorage.getItem('token')
+        const headers = loginToken ? {
+            token: loginToken,
+        } : {}
+
         // 发送请求
         return axios.request<T>({
             url: requestOptions?.url || options.url,
@@ -28,10 +36,15 @@ function useRequest<T>(options: AxiosRequestConfig = {
             signal: controllerRef.current.signal,
             data: requestOptions?.data || options.data,
             params: requestOptions?.params || options.params,
+            headers
         }).then(response => {
             setData(response.data)
             return response.data
         }).catch((e: any) => {
+            if (e?.response?.status === 403) {
+                localStorage.removeItem('token')
+                navigate('/account/login')
+            }
             setError(e.message || 'unknow request error.')
             throw new Error(e)
         }).finally(() => {

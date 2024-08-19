@@ -9,6 +9,7 @@ import Guide from './containers/Guide'
 import Account from './containers/Account'
 import Login from './containers/Account/Login'
 import Register from './containers/Account/Register'
+import Home from './containers/Home'
 
 const router = createHashRouter([
     {
@@ -28,6 +29,10 @@ const router = createHashRouter([
                 element: <Register />,
             },
         ]
+    },
+    {
+        path: '/home',
+        element: <Home />
     },
 ])
 

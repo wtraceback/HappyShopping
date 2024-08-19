@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import './style.scss'
 import useRequest from '../../utils/useRequest'
@@ -16,6 +17,7 @@ function Login() {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const modalRef = useRef<ModalInterfaceType>(null!)
+    const navigate = useNavigate()
 
     // 通过泛型传递给 useRequest 方法
     // 接收 data 类型也一定为 ResponseType | null
@@ -40,6 +42,12 @@ function Login() {
             data: { phone: phoneNumber, password: password },
         }).then((data) => {
             data && console.log(data)
+            const { data: { token} } = data
+            if (token) {
+                localStorage.setItem('token', token)
+                navigate('/home')
+            }
+
         }).catch((e: any) => {
             modalRef.current?.showMessage(e?.message || '未知异常')
         })
