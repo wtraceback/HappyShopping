@@ -5,9 +5,43 @@ import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import swiperImg from '../../images/首页_banner_@2x.png'
 
+const localLocation = localStorage.getItem('location')
+const locationHistory = localLocation ? JSON.parse(localLocation) : null
+
+// 默认请求数据
+const defaultRequestData = {
+    url: '/home.json',
+    method: 'POST',
+    data: {
+        latitude: locationHistory ? locationHistory.latitude : 37.7304167,
+        longitude: locationHistory ? locationHistory.longitude : -122.384425,
+    }
+}
 
 function Home() {
     const [page, setPage] = useState(1)
+    const [requestData, setRequestData] = useState(defaultRequestData)
+
+    useEffect(() => {
+        if (navigator.geolocation && !locationHistory) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                console.log(position)
+                const { coords } = position
+                const { latitude, longitude } = coords
+
+                localStorage.setItem('location', JSON.stringify({
+                    latitude, longitude
+                }))
+
+                setRequestData({
+                    ...defaultRequestData,
+                    data: { latitude, longitude }
+                })
+            }, (error) => {
+                console.log(error)
+            }, {timeout: 500})
+        }
+    }, [])
 
     return (
         <div className="page home-page">
