@@ -26,10 +26,10 @@ input:-webkit-autofill:active {
 }
 
 @font-face {
-  font-family: "iconfont"; /* Project id 4633505 */
-  src: url('//at.alicdn.com/t/c/font_4633505_n0qpeovqt6j.woff2?t=1721920824840') format('woff2'),
-        url('//at.alicdn.com/t/c/font_4633505_n0qpeovqt6j.woff?t=1721920824840') format('woff'),
-        url('//at.alicdn.com/t/c/font_4633505_n0qpeovqt6j.ttf?t=1721920824840') format('truetype');
+    font-family: 'iconfont';  /* Project id 4633505 */
+    src: url('//at.alicdn.com/t/c/font_4633505_xzv1xb3tn8a.woff2?t=1724512163783') format('woff2'),
+         url('//at.alicdn.com/t/c/font_4633505_xzv1xb3tn8a.woff?t=1724512163783') format('woff'),
+         url('//at.alicdn.com/t/c/font_4633505_xzv1xb3tn8a.ttf?t=1724512163783') format('truetype');
 }
 
 .iconfont {
