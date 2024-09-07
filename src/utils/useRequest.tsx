@@ -1,11 +1,14 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import axios, { AxiosRequestConfig } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-// T 为传递进来的 ResponseType
-function useRequest<T>(options: AxiosRequestConfig = {
+// 默认请求参数
+const defaultRequestConfig = {
     url: '/', method: 'GET', data: {}, params: {},
-}) {
+}
+
+// T 为传递进来的 ResponseType
+function useRequest<T>(options: AxiosRequestConfig = defaultRequestConfig) {
     // data 的类型定义为 ResponseType | null
     const [data, setData] = useState<T | null>(null)
     const [error, setError] = useState('')
@@ -17,7 +20,7 @@ function useRequest<T>(options: AxiosRequestConfig = {
         controllerRef.current.abort()
     }
 
-    const request = (requestOptions?: AxiosRequestConfig) => {
+    const request = useCallback((requestOptions?: AxiosRequestConfig) => {
         // 清空之前的请求状态和数据
         setData(null)
         setError('')
@@ -50,7 +53,7 @@ function useRequest<T>(options: AxiosRequestConfig = {
         }).finally(() => {
             setLoaded(true)
         })
-    }
+    }, [navigate, options])
 
     // 把 data 返回，返回 data 的类型一定为 ResponseType | null
     return { data, error, loaded, request, cancel }

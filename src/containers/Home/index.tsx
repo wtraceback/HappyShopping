@@ -4,6 +4,7 @@ import 'swiper/css';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import swiperImg from '../../images/首页_banner_@2x.png'
+import useRequest from '../../utils/useRequest';
 
 const localLocation = localStorage.getItem('location')
 const locationHistory = localLocation ? JSON.parse(localLocation) : null
@@ -21,7 +22,17 @@ const defaultRequestData = {
 function Home() {
     const [page, setPage] = useState(1)
     const [requestData, setRequestData] = useState(defaultRequestData)
+    const { request } = useRequest(requestData)
 
+    useEffect(() => {
+        request().then((data) => {
+            console.log(data);
+        }).catch(e => {
+            console.log(e?.message);
+        })
+    }, [requestData, request])
+
+    // 获取经纬度信息
     useEffect(() => {
         if (navigator.geolocation && !locationHistory) {
             navigator.geolocation.getCurrentPosition((position) => {
