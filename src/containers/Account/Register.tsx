@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 import './style.scss'
-import useRequest from '../../utils/useRequest'
-import Modal, { ModalInterfaceType} from '../../components/Modal'
+import useRequest from '../../hooks/useRequest'
+import { message } from '../../utils/message'
 
 // 定义接口返回内容
 type ResponseType = {
@@ -15,33 +15,32 @@ function Register() {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const [checkPassword, setCheckPassword] = useState('')
-    const modalRef = useRef<ModalInterfaceType>(null!)
 
     const { request } = useRequest<ResponseType>()
 
     function handleSubmitBtnClick() {
         if (!userName) {
-            modalRef.current.showMessage('用户名不得为空！')
+            message('用户名不得为空！')
             return
         }
 
         if (!phoneNumber) {
-            modalRef.current.showMessage('手机号码不得为空！')
+            message('手机号码不得为空！')
             return
         }
 
         if (!password) {
-            modalRef.current.showMessage('密码不得为空！')
+            message('密码不得为空！')
             return
         }
 
         if (password.length < 6) {
-            modalRef.current.showMessage('密码至少为 6 位！')
+            message('密码至少为 6 位！')
             return
         }
 
         if (password !== checkPassword) {
-            modalRef.current.showMessage('两次输入密码不一致！')
+            message('两次输入密码不一致！')
             return
         }
 
@@ -58,7 +57,7 @@ function Register() {
         }).then((data) => {
             data && console.log(data)
         }).catch((e: any) => {
-            modalRef.current?.showMessage(e?.message || '未知异常')
+            message(e?.message)
         })
     }
 
@@ -111,8 +110,6 @@ function Register() {
             >
                 注册
             </div>
-
-            <Modal ref={modalRef} />
         </>
     )
 }

@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import './style.scss'
-import useRequest from '../../utils/useRequest'
-import Modal, { ModalInterfaceType} from '../../components/Modal'
+import useRequest from '../../hooks/useRequest'
+import { message } from '../../utils/message'
 
 // 定义接口返回内容
 type ResponseType = {
@@ -16,7 +16,6 @@ type ResponseType = {
 function Login() {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
-    const modalRef = useRef<ModalInterfaceType>(null!)
     const navigate = useNavigate()
 
     // 通过泛型传递给 useRequest 方法
@@ -25,12 +24,12 @@ function Login() {
 
     function handleSubmitBtnClick() {
         if (!phoneNumber) {
-            modalRef.current.showMessage('手机号码不得为空！')
+            message('手机号码不得为空！')
             return
         }
 
         if (!password) {
-            modalRef.current.showMessage('密码不得为空！')
+            message('密码不得为空！')
             return
         }
 
@@ -49,7 +48,7 @@ function Login() {
             }
 
         }).catch((e: any) => {
-            modalRef.current?.showMessage(e?.message || '未知异常')
+            message(e?.message)
         })
     }
 
@@ -85,8 +84,6 @@ function Login() {
             <p className="notice">
                 *登录即表示您赞同使用条款及隐私政策
             </p>
-
-            <Modal ref={modalRef} />
         </>
     )
 }
