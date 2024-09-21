@@ -34,9 +34,7 @@ function Login() {
         }
 
         request({
-            url: '/api/login.json',
-            // method: 'GET',
-            // params: { phone: phoneNumber, password: password },
+            url: '/login',
             method: 'POST',
             data: { phone: phoneNumber, password: password },
         }).then((data) => {

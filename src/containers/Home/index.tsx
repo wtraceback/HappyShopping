@@ -11,7 +11,7 @@ const locationHistory = localLocation ? JSON.parse(localLocation) : null
 
 // 默认请求数据
 const defaultRequestData = {
-    url: '/home.json',
+    url: '/home',
     method: 'POST',
     data: {
         latitude: locationHistory ? locationHistory.latitude : 37.7304167,

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 import './style.scss'
 import useRequest from '../../hooks/useRequest'
@@ -11,6 +12,7 @@ type ResponseType = {
 }
 
 function Register() {
+    const navigate = useNavigate()
     const [userName, setUserName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
@@ -45,9 +47,7 @@ function Register() {
         }
 
         request({
-            url: '/api/register.json',
-            // method: 'GET',
-            // params: { phone: phoneNumber, password: password },
+            url: '/register',
             method: 'POST',
             data: {
                 user: userName,
@@ -55,6 +55,9 @@ function Register() {
                 password: password
             },
         }).then((data) => {
+            if (data?.success) {
+                navigate('/account/login')
+            }
             data && console.log(data)
         }).catch((e: any) => {
             message(e?.message)
