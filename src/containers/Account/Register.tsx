@@ -1,15 +1,10 @@
+import './style.scss'
+import type { RegisterResponseType } from './types'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-
-import './style.scss'
 import useRequest from '../../hooks/useRequest'
 import { message } from '../../utils/message'
 
-// 定义接口返回内容
-type ResponseType = {
-    success: boolean,
-    data: boolean,
-}
 
 function Register() {
     const navigate = useNavigate()
@@ -18,7 +13,7 @@ function Register() {
     const [password, setPassword] = useState('')
     const [checkPassword, setCheckPassword] = useState('')
 
-    const { request } = useRequest<ResponseType>()
+    const { request } = useRequest<RegisterResponseType>({manual: true})
 
     function handleSubmitBtnClick() {
         if (!userName) {

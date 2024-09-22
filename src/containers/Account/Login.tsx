@@ -1,17 +1,10 @@
+import './style.scss'
+import type { LoginResponseType } from './types'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-import './style.scss'
 import useRequest from '../../hooks/useRequest'
 import { message } from '../../utils/message'
 
-// 定义接口返回内容
-type ResponseType = {
-    success: boolean;
-    data: {
-        token: string;
-    }
-}
 
 function Login() {
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -19,8 +12,8 @@ function Login() {
     const navigate = useNavigate()
 
     // 通过泛型传递给 useRequest 方法
-    // 接收 data 类型也一定为 ResponseType | null
-    const { request } = useRequest<ResponseType>()
+    // 接收 data 类型也一定为 LoginResponseType | null
+    const { request } = useRequest<LoginResponseType>({manual: true})
 
     function handleSubmitBtnClick() {
         if (!phoneNumber) {

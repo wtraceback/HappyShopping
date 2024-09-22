@@ -1,7 +1,7 @@
+import './style.scss'
 import { useEffect } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
-import './style.scss'
 
 function Account() {
     const location = useLocation()

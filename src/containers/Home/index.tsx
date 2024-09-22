@@ -1,10 +1,11 @@
 import './style.scss'
 import 'swiper/css';
-
+import type { ResponseType } from './types';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import swiperImg from '../../images/首页_banner_@2x.png'
 import useRequest from '../../hooks/useRequest';
+
 
 const localLocation = localStorage.getItem('location')
 const locationHistory = localLocation ? JSON.parse(localLocation) : null
@@ -22,15 +23,7 @@ const defaultRequestData = {
 function Home() {
     const [page, setPage] = useState(1)
     const [requestData, setRequestData] = useState(defaultRequestData)
-    const { request } = useRequest(requestData)
-
-    useEffect(() => {
-        request().then((data) => {
-            console.log(data);
-        }).catch(e => {
-            console.log(e?.message);
-        })
-    }, [requestData, request])
+    const { data } = useRequest<ResponseType>(requestData)
 
     // 获取经纬度信息
     useEffect(() => {
@@ -59,7 +52,7 @@ function Home() {
             <div className='banner'>
                 <h3 className='location'>
                     <span className='iconfont'>&#xe67c;</span>
-                    优果购（昌平店）
+                    {data?.data.location.address || ''}
                 </h3>
                 <div className='search'>
                     <span className='iconfont'>&#xe64e;</span>
@@ -71,18 +64,19 @@ function Home() {
                         slidesPerView={1}
                         onSlideChange={(e: any) => setPage(e.activeIndex + 1)}
                     >
-                        <SwiperSlide>
-                            <div className='swiper-item'>
-                                <img className='swiper-item-img' src={swiperImg} alt='轮播图' />
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className='swiper-item'>
-                                <img className='swiper-item-img' src={swiperImg} alt='轮播图' />
-                            </div>
-                        </SwiperSlide>
+                        {
+                            (data?.data.banners || []).map((item) => {
+                                return (
+                                    <SwiperSlide key={item.id}>
+                                        <div className='swiper-item'>
+                                            <img className='swiper-item-img' src={item.url ? item.url : swiperImg} alt='轮播图' />
+                                        </div>
+                                    </SwiperSlide>
+                                )
+                            })
+                        }
                     </Swiper>
-                    <div className='pagination'>{page}/2</div>
+                    <div className='pagination'>{page}/{data?.data.banners.length || 0}</div>
                 </div>
             </div>
         </div>

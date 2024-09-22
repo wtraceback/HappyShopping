@@ -1,5 +1,6 @@
 .home-page {
     .banner {
+        position: relative;
         height: 2.3rem;
         background-color: #73D13D;
         .location {
@@ -27,7 +28,6 @@
             }
         }
         .swiper-area {
-            position: relative;
             .swiper-item {
                 margin-left: .18rem;
                 &-img {
@@ -39,7 +39,7 @@
                 position: absolute;
                 z-index: 999;
                 left: 50%;
-                bottom: .26rem;
+                bottom: .36rem;
                 transform: translateX(-50%);
                 color: #fff;
                 font-size: .12rem;
