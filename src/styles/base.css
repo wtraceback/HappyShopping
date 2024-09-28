@@ -27,9 +27,9 @@ input:-webkit-autofill:active {
 
 @font-face {
     font-family: 'iconfont';  /* Project id 4633505 */
-    src: url('//at.alicdn.com/t/c/font_4633505_xzv1xb3tn8a.woff2?t=1724512163783') format('woff2'),
-         url('//at.alicdn.com/t/c/font_4633505_xzv1xb3tn8a.woff?t=1724512163783') format('woff'),
-         url('//at.alicdn.com/t/c/font_4633505_xzv1xb3tn8a.ttf?t=1724512163783') format('truetype');
+    src: url('//at.alicdn.com/t/c/font_4633505_vdz39gjiyv.woff2?t=1727011309673') format('woff2'),
+         url('//at.alicdn.com/t/c/font_4633505_vdz39gjiyv.woff?t=1727011309673') format('woff'),
+         url('//at.alicdn.com/t/c/font_4633505_vdz39gjiyv.ttf?t=1727011309673') format('truetype');
 }
 
 .iconfont {
