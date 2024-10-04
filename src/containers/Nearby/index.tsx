@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useRequest from "../../hooks/useRequest";
 import { ResponseType } from "./types";
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 const localLocation = localStorage.getItem("location")
@@ -21,9 +22,17 @@ const defaultRequestData = {
 const Nearby = () => {
     const { data } = useRequest<ResponseType>(defaultRequestData)
     const [keyValue, setKeyValue] = useState("")
+    const navigate = useNavigate()
     const list = (data?.data || []).filter(item => {
         return item.name.indexOf(keyValue) > -1
     })
+
+    const switchLocation = (latitude: string, longitude: string) => {
+        localStorage.setItem('location', JSON.stringify({
+            latitude, longitude
+        }))
+        navigate('/home')
+    }
 
     return (
         <div className="page nearby-page">
@@ -51,7 +60,11 @@ const Nearby = () => {
                 {
                     list.map((item) => {
                         return (
-                            <li className="list-item" key={item.id}>
+                            <li
+                                className="list-item"
+                                key={item.id}
+                                onClick={() => {switchLocation(item.latitude, item.longitude)}}
+                            >
                                 <div className="list-item-left">
                                     <div className="list-item-title">{item.name}</div>
                                     <p className="list-item-desc">联系电话:{item.phone}</p>

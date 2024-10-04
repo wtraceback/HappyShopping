@@ -1,10 +1,13 @@
+// 返回内容类型
 export type ResponseType = {
     success: boolean,
     data: Array<{
-        id: string;
-        name: string;
-        address: string;
-        phone: string;
-        distance: string;
+        id: string,
+        name: string,
+        phone: string,
+        address: string,
+        distance: string,
+        latitude: string,
+        longitude: string,
     }>
 }
